@@ -41,3 +41,9 @@ def get_expired_tickets():
         query = file.read()
     tickets = consulta_banco(query)
     return tickets
+    
+def get_expiring_tickets():
+    with open('sql\\tickets_less_two_hour.sql', 'r') as file:
+        query = file.read()
+    tickets = consulta_banco(query)
+    return tickets
