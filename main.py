@@ -29,7 +29,7 @@ def main():
 
         if time_to_resolve <= datetime.now() and not notification.expired_notified:
             send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=True)
-            # update_ticket_expired_notified(ticket, office)
+            update_ticket_expired_notified(ticket, office)
             logging.info(f'Ticket {ticket} expired')
             pass
 
