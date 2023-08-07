@@ -28,27 +28,27 @@ def main():
             notification = search_ticket(ticket, office)
 
         if time_to_resolve <= datetime.now() and not notification.expired_notified:
-            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=True)
+            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=0)
             update_ticket_expired_notified(ticket, office)
             logging.info(f'Ticket {ticket} expired')
             pass
 
         elif time_to_resolve <= datetime.now() + timedelta(
                 minutes=30) and not notification.less_than_30m_notified and not notification.expired_notified:
-            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support)
+            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=30)
             update_ticket_less_than_30m_notified(ticket, office)
             logging.info(f'Ticket {ticket} less than 30m to expire')
 
         elif time_to_resolve <= datetime.now() + timedelta(hours=1) and not notification.less_than_1h_notified and not \
                 notification.expired_notified and not notification.less_than_30m_notified:
-            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support)
+            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=1)
             update_ticket_less_than_1h_notified(ticket, office)
             logging.info(f'Ticket {ticket} less than 1h to expire')
 
         elif time_to_resolve <= datetime.now() + timedelta(hours=2) and not notification.less_than_2h_notified and not \
                 notification.expired_notified and not notification.less_than_30m_notified and not \
                 notification.less_than_1h_notified:
-            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support)
+            send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=2)
             update_ticket_less_than_2h_notified(ticket, office)
             logging.info(f'Ticket {ticket} less than 2h to expire')
 

@@ -11,9 +11,18 @@ webhook_url = os.getenv('WEBHOOK_URL')
 glpi_ticket_url = f'{os.getenv("GLPI_URL_HOST")}/front/ticket.form.php?id='
 
 
-def send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=False):
-    title = 'CHAMADO ESTOURADO' if expired else 'CHAMADO EXPIRANDO'
-    title_color = 'Attention' if expired else 'Default'
+def send_notifications_by_webhook(ticket, office, time_to_resolve, it_support, expired=None):
+    
+    if expired == 0:
+        title = 'CHAMADO ESTOURADO'
+    elif expired == 1:
+        title = 'CHAMADO URGENTE (Tempo restante: 1h)'
+    elif expired == 2:
+        title = 'CHAMADO URGENTE (Tempo restante: 2h)'
+    elif expired == 30:
+        title = 'CHAMADO URGENTE (Tempo restante: 30min)'
+        
+    title_color = 'Attention' if expired == 0 else 'Default'
 
     payload = {
         "type": "message",
